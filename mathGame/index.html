@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Математическая игра</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="game-container">
+        <header class="game-header">
+            <h1>Math game</h1>
+        </header>
+        <div class="game-info">
+            <div class="level-display"> Level: <span id="level">easy</span> </div>
+            <div class="timer"> Time: <span id="time"></span> </div>
+        </div>
+        <div class="stats">
+            <div class="correct-answers"> Correct: <span id="correct">0</span> </div>
+            <div class="wrong-answers"> Wrong: <span id="wrong">0</span> </div>
+            <div class="question-count"> Question: <span id="question">0</span>/10 </div>
+        </div>
+        <div class="game-area">
+            <div class="question-display"> <span id="current-question">3 * 13</span> </div>
+            <div class="answer-input"> <input type="text" id="user-answer" placeholder="Enter answer"> <button
+                    id="submit-btn">write</button> </div>
+        </div>
+        <div class="message-area">
+            <div id="message"></div>
+        </div>
+        <div class="game-controls"> <button id="restart-btn" style="display: none;">Restart</button> <button
+                id="exit-btn" style="display: none;">Exit</button> </div>
+    </div>
+    <script src="scripts.js"></script>
+</body>
+
+</html>

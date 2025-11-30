@@ -1,0 +1,221 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #0a0a0a;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    color: #e5e5e5;
+}
+
+/* Main container */
+.game-container {
+    width: 380px;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
+}
+
+.game-header h1 {
+    font-size: 1.5rem;
+    color: #fff;
+    margin-bottom: 20px;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+}
+
+/* info */
+.game-info {
+    display: flex;
+    justify-content: space-between;
+    background: #262626;
+    padding: 12px 16px;
+    border: 1px solid #404040;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    font-size: 0.875rem;
+    color: #a3a3a3;
+}
+
+.level-display {
+    font-weight: bold;
+    font-size: 18px;
+    color: #1567b9;
+}
+
+.timer {
+    font-weight: bold;
+    font-size: 18px;
+    color: #e74c3c;
+}
+
+/* Блок статистики*/
+.stats {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    font-size: 0.875rem;
+}
+
+.correct-answers,
+.wrong-answers,
+.question-count {
+    text-align: center;
+    flex: 1;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.correct-answers {
+    color: #22c55e;
+    font-weight: 500;
+}
+
+.wrong-answers {
+    color: #ef4444;
+    font-weight: 500;
+}
+
+.question-count {
+    color: #a3a3a3;
+    font-weight: 500;
+}
+
+/*область вопроса */
+.question-display {
+    background: #262626;
+    padding: 24px;
+    border: 1px solid #404040;
+    border-radius: 8px;
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+}
+
+/* Поле ввода */
+.answer-input {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+#user-answer {
+    flex: 2;
+    padding: 12px 16px;
+    background: #262626;
+    border: 1px solid #404040;
+    border-radius: 6px;
+    font-size: 1rem;
+    text-align: center;
+    color: #fff;
+    font-family: inherit;
+    transition: all 0.2s;
+}
+
+#user-answer::placeholder {
+    color: #737373;
+}
+
+#user-answer:focus {
+    outline: none;
+    border-color: #3b82f6;
+}
+
+/* button */
+#submit-btn {
+    flex: 1;
+    background: #3b82f6;
+    color: white;
+    border: none;
+    padding: 12px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    font-family: inherit;
+    transition: all 0.2s;
+    font-size: 0.9rem;
+}
+
+#submit-btn:hover {
+    background: #2563eb;
+}
+
+/* 8. Область сообщений */
+.message-area {
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+/* Кнопки управления */
+.game-controls {
+    display: flex;
+    gap: 8px;
+}
+
+#restart-btn,
+#exit-btn {
+    flex: 1;
+    padding: 12px 16px;
+    border: 1px solid;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.2s;
+    background: #262626;
+}
+
+#restart-btn {
+    border-color: #22c55e;
+    color: #22c55e;
+}
+
+#restart-btn:hover {
+    background: #22c55e;
+    color: #000;
+}
+
+#exit-btn {
+    border-color: #737373;
+    color: #737373;
+}
+
+#exit-btn:hover {
+    background: #737373;
+    color: #000;
+}
+
+/* Стили для сообщений */
+.correct-message {
+    color: #22c55e;
+    padding: 8px 16px;
+    background: #1a2c1e;
+    border-radius: 6px;
+    border: 1px solid #2d4a34;
+}
+
+.wrong-message {
+    color: #ef4444;
+    padding: 8px 16px;
+    background: #2a1a1a;
+    border-radius: 6px;
+    border: 1px solid #4a2d2d;
+}
