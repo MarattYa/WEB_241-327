@@ -319,6 +319,9 @@ function initEventListeners() {
     if (elements.restartBtn) { 
         elements.restartBtn.addEventListener('click', restartGame); 
     } 
+    if (elements.exitBtn) {
+        elements.exitBtn.addEventListener('click',exitToMenu)
+    }
 } 
 function restartGame() { 
     stopTimer(); 
@@ -344,6 +347,23 @@ function restartGame() {
     console.log("\nGame restarted"); 
     console.log("START GAME"); 
 } 
+
+function exitToMenu(){
+    stopTimer();
+    gameState.isGameActive = false;
+
+    document.querySelector(".game-container").style.display = "none";
+
+    const startMenu = document.getElementById("start-menu");
+    startMenu.style.display = "flex";
+    startMenu.classList.remove("hide");
+
+    elements.message.textContent = "";
+    elements.userAnswer.value = "";
+    
+    console.log("Returned to start menu");
+}
+
 document.addEventListener('DOMContentLoaded', function () {  
     initEventListeners(); 
 
