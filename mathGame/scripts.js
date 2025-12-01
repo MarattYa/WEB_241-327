@@ -346,5 +346,25 @@ function restartGame() {
 } 
 document.addEventListener('DOMContentLoaded', function () {  
     initEventListeners(); 
-    setTimeout(restartGame, 1000); 
+
+    const startBtn = document.getElementById("start-btn");
+    const startMenu = document.getElementById("start-menu");
+    const gameContainer = document.querySelector(".game-container");
+
+    startBtn.addEventListener("click", ()=> {
+        const selectedLevel = document.querySelector('input[name="level"]:checked').value;
+
+        gameState.currentLevel = selectedLevel;
+        gameState.timeLeft = 300;
+        gameState.isGameActive = true;
+
+        startMenu.classList.add("hide");
+
+        setTimeout(() => {
+            startMenu.style.display = "none";
+
+            gameContainer.style.display = "block";
+            restartGame();
+        }, 300);
+    });
 });

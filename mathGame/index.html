@@ -9,7 +9,27 @@
 </head>
 
 <body>
-    <div class="game-container">
+    <div class="start-menu" id="start-menu">
+        <h1 class="menu-title">Math Game</h1>
+        <h2>Select Level</h2>
+        <div class="menu-levels">
+            <label>
+                <input type="radio" name="level" value="easy" checked>
+                Easy
+            </label>
+            <label>
+                <input type="radio" name="level" value="medium">
+                Medium
+            </label>
+            <label>
+                <input type="radio" name="level" value="hard">
+                Hard
+            </label>
+        </div>
+
+        <button id="start-btn" class="start-button">Start</button>
+    </div>
+    <div class="game-container" style="display: none;">
         <header class="game-header">
             <h1>Math game</h1>
         </header>
