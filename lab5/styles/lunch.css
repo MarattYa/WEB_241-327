@@ -178,22 +178,22 @@ nav a:hover {
 }
 
 .filters button {
-    background: none;
-    border: none;
-    padding: 0;
-    margin: 0;
-    font-size: 16px;
-    font-weight: 400;
-    font-family: inherit;
-    color: #5cb85c;
-    cursor: pointer;
-    transition: color 0.2s ease;
+  padding: 8px 16px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filters button:hover {
+  background-color: #f5f5f5;
 }
 
 .filters button.active {
-    color: #297c29;
-    font-weight: 500;
-    background-color: #79bf79bd;
+  background-color: tomato;
+  color: #fff;
+  border-color: tomato;
 }
 
 /************************************

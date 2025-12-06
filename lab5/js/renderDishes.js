@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
       container.appendChild(card);
     });
   }
-
+  // Фильтры
   Object.keys(sections).forEach(category => {
     const filterBlock = sections[category].querySelector(".filters");
     if(!filterBlock) return;
@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     buttons.forEach(btn => {
       btn.addEventListener("click", () => {
-        const active = btn.classList.remove("active");
+        const active = btn.classList.contains("active");
 
         buttons.forEach(b => b.classList.remove("active"));
 
