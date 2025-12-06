@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     main: document.querySelector("#main-section"),
     salads_starters: document.querySelector("#salads_starters-section"),
     drink: document.querySelector("#drink-section"),
-    dessert: document.querySelector("#desserts-section")
+    desserts: document.querySelector("#desserts-section")
   };
 
   function renderCategory(category, filter = null){

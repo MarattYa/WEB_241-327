@@ -228,7 +228,7 @@ const dishes = [
         keyword: "baklava",
         name: "Пахлава",
         price: 220,
-        category: "dessert",
+        category: "desserts",
         count: "300 г",
         image: "src/menu/desserts/baklava.jpg",
         kind: "middle"
@@ -237,7 +237,7 @@ const dishes = [
         keyword: "checheesecake",
         name: "Чизкейк",
         price: 240,
-        category: "dessert",
+        category: "desserts",
         count: "125 г",
         image: "src/menu/desserts/checheesecake.jpg",
         kind: "small"
@@ -246,7 +246,7 @@ const dishes = [
         keyword: "chocolatecake",
         name: "Шоколадный чизкейк",
         price: 260,
-        category: "dessert",
+        category: "desserts",
         count: "125 г",
         image: "src/menu/desserts/chocolatecake.jpg",
         kind: "small"
@@ -255,7 +255,7 @@ const dishes = [
         keyword: "chocolatecheesecake",
         name: "Шоколадный торт",
         price: 270,
-        category: "dessert",
+        category: "desserts",
         count: "140 г",
         image: "src/menu/desserts/chocolatecheesecake.jpg",
         kind: "big"
@@ -264,7 +264,7 @@ const dishes = [
         keyword: "donuts",
         name: "Пончики(3 штуки)",
         price: 410,
-        category: "dessert",
+        category: "desserts",
         count: "350 г",
         image: "src/menu/desserts/donuts.jpg",
         kind: "small"
@@ -273,7 +273,7 @@ const dishes = [
         keyword: "donuts2",
         name: "Пончики(6 штук)",
         price: 650,
-        category: "dessert",
+        category: "desserts",
         count: "700 г",
         image: "src/menu/desserts/donuts2.jpg",
         kind: "middle"
