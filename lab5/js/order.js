@@ -33,6 +33,7 @@ function selectDish(keyword) {
   }
 }
 
+
 function updateOrderView() {
    // элементы в DOM
   const soupEl = document.querySelector("#order-soup");
@@ -63,7 +64,7 @@ window.addDishToOrder = function (keyword) {
   if(!dish) return;
 
   order[dish.category] = dish;
-  
+
   selectDish(keyword);
 
   updateOrderView();

@@ -31,10 +31,17 @@ document.addEventListener("DOMContentLoaded", () => {
     //   window.addDishToOrder(dish.keyword);
     // });
 
-    
+    card.addEventListener("click", (event) => {
+      // Проверяем, не кликнули ли мы на кнопку (её обрабатывает отдельный обработчик)
+      if (!event.target.classList.contains('add-btn')) {
+        window.addDishToOrder(dish.keyword);
+      }
+    });
 
     card.querySelector(".add-btn").addEventListener("click", (event) => {
       event.stopPropagation();
+
+
 
       // 1 — получаем позицию карточки
       const rect = card.getBoundingClientRect();
