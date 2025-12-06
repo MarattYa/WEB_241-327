@@ -33,14 +33,8 @@ document.addEventListener("DOMContentLoaded", () => {
       `;
 
       card.addEventListener("click", (event) => {
-      // Проверяем, не кликнули ли мы на кнопку (её обрабатывает отдельный обработчик)
-      if (!event.target.classList.contains('add-btn')) {
-        window.addDishToOrder(dish.keyword);
-      }
-    });
-
-      card.querySelector(".add-btn").addEventListener("click", (event) => {
-        event.stopPropagation();
+        // Клик по карточке или кнопке = одно и то же
+        event.stopPropagation(); // чтобы не было двойного вызова при клике на кнопку
 
         const rect = card.getBoundingClientRect();
         const scrollTop = window.scrollY || window.pageYOffset;
@@ -66,7 +60,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         setTimeout(() => clone.remove(), 600);
-
 
         window.addDishToOrder(dish.keyword);
       });
