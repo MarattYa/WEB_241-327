@@ -1,0 +1,429 @@
+/* styles/lunch.css */
+
+/* Основные стили для страницы ланча */
+.lunch-page {
+  font-family: 'Roboto Mono', monospace;
+  background-color: #f5f5f5;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* Шапка */
+header {
+  background: white;
+  padding: 20px 40px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.8rem;
+  color: #2c3e50;
+}
+
+nav {
+  display: flex;
+  gap: 30px;
+}
+
+nav a {
+  text-decoration: none;
+  color: #666;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+nav a:hover, nav a#active {
+  color: #ff6347;
+}
+
+/* Основные секции с блюдами */
+main {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+#soup-section, #main-section, #beverage-section {
+  margin-bottom: 60px;
+}
+
+#soup-section h2, #main-section h2, #beverage-section h2 {
+  font-size: 1.5rem;
+  color: #2c3e50;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #eee;
+}
+
+/* Сетка блюд */
+.data-dish {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+.dish {
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  border: 2px solid transparent;
+}
+
+.dish:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.dish.selected {
+  background-color: #fff;
+  box-shadow: 0 5px 15px rgba(255, 99, 71, 0.2);
+  border-color: #ff6347;
+}
+
+.dish img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.dish .name {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.dish .price {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #ff6347;
+  margin: 5px 0;
+}
+
+.dish .weight {
+  color: #777;
+  font-size: 0.9rem;
+  margin-top: 5px;
+}
+
+.dish button {
+    margin-top: auto;
+    padding: 10px 30px;
+    background: #f1eee9;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.dish:hover button {
+    background-color: tomato;
+    color: white;
+}
+
+.flying {
+  position: absolute;
+  z-index: 999;
+  pointer-events: none;
+  transition: transform 0.6s ease-in, opacity 0.6s ease-in;
+}
+
+/* Секция заказа */
+.order-section {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.order-title {
+  text-align: center;
+  font-size: 2rem;
+  color: #2c3e50;
+  margin-bottom: 40px;
+}
+
+.order-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  background: white;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+/* Левый блок - Заказ */
+.order-left {
+  padding-right: 30px;
+  border-right: 1px solid #eee;
+}
+
+.order-left h3, .order-right h3 {
+  font-size: 1.3rem;
+  color: #2c3e50;
+  margin-bottom: 25px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #eee;
+}
+
+/* Стили для отображения заказа */
+.order-summary {
+  margin-bottom: 30px;
+}
+
+.order-category {
+  margin-bottom: 20px;
+}
+
+.order-category strong {
+  display: block;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 8px;
+  font-size: 1.1rem;
+}
+
+.order-item {
+  font-size: 1rem;
+  color: #555;
+  margin-left: 10px;
+  min-height: 24px;
+}
+
+.order-item.empty {
+  color: #999;
+  font-style: italic;
+}
+
+#order-total {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 2px solid #ff6347;
+}
+
+#order-total strong {
+  display: block;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+#order-total-price {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ff6347;
+}
+
+/* Комментарии к заказу */
+.comments-section {
+  margin-top: 30px;
+}
+
+.comments-section h4 {
+  font-size: 1.1rem;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.comments-section textarea {
+  width: 100%;
+  height: 100px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 0.95rem;
+  resize: vertical;
+}
+
+/* Правый блок - Данные */
+.order-right {
+  padding-left: 30px;
+}
+
+.order-right label {
+  display: block;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+  margin-top: 15px;
+}
+
+.order-right input[type="text"],
+.order-right input[type="email"],
+.order-right input[type="tel"],
+.order-right input[type="time"] {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 0.95rem;
+  margin-bottom: 5px;
+}
+
+.order-right input:focus {
+  outline: none;
+  border-color: #ff6347;
+  box-shadow: 0 0 0 2px rgba(255, 99, 71, 0.1);
+}
+
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.checkbox-row input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+}
+
+.checkbox-row label {
+  margin: 0;
+  font-weight: normal;
+}
+
+.delivery-note {
+  color: #666;
+  font-size: 0.9rem;
+  margin: 15px 0;
+  padding-left: 10px;
+  border-left: 3px solid #ff6347;
+}
+
+.delivery-label {
+  font-weight: 600;
+  color: #333;
+  margin: 20px 0 10px 0;
+}
+
+.radio-row {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 20px;
+}
+
+.radio-row label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: normal;
+  margin: 0;
+  cursor: pointer;
+}
+
+.radio-row input[type="radio"] {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+}
+
+/* Кнопки */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.form-actions button {
+  padding: 12px 30px;
+  border-radius: 8px;
+  font-family: 'Roboto Mono', monospace;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  border: none;
+}
+
+.form-actions button[type="reset"] {
+  background: #f0f0f0;
+  color: #666;
+}
+
+.form-actions button[type="reset"]:hover {
+  background: #e0e0e0;
+}
+
+.form-actions button[type="submit"] {
+  background: #ff6347;
+  color: white;
+}
+
+.form-actions button[type="submit"]:hover {
+  background: #ff4c2c;
+}
+
+/* Футер */
+footer {
+  text-align: center;
+  padding: 30px;
+  background: #2c3e50;
+  color: white;
+  margin-top: 60px;
+}
+
+/* Адаптивность */
+@media (max-width: 900px) {
+  .order-container {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  
+  .order-left {
+    padding-right: 0;
+    border-right: none;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 30px;
+  }
+  
+  .order-right {
+    padding-left: 0;
+  }
+  
+  .data-dish {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  header {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+  
+  nav {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+  }
+  
+  .data-dish {
+    grid-template-columns: 1fr;
+  }
+  
+  .order-container {
+    padding: 20px;
+  }
+  
+  .radio-row {
+    flex-direction: column;
+    gap: 15px;
+  }
+}
