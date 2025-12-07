@@ -19,6 +19,56 @@
     border-bottom: 2px solid #eee;
 }
 
+/* Иконки */
+.combo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, auto);
+  gap: 30px;
+}
+
+.combo-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 0px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+  min-height: 180px;
+}
+
+.combo-card img {
+  width: 35px;
+  height: 35px;
+  object-fit: cover;
+  border-radius: 12px;
+  transition: transform 0.3s ease;
+}
+.dessert-note {
+  margin-top: 25px;
+  font-size: 0.9rem;
+  color: #777;
+  text-align: center;
+}
+
+.combo-card img:hover {
+  transform: translateY(-6px) scale(1.1);
+}
+
+.combo-dish span {
+  margin-top: 8px;
+  font-weight: 600;
+}
+
+.combo-card p {
+  margin-top: 25px;
+  font-size: 0.9rem;
+  color: #777;
+  text-align: center;
+}
 /* Карточки блюд */
 .data-dish {
     display: grid;
