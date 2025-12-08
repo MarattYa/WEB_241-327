@@ -1,6 +1,6 @@
 // js/order.js
 
-let order = {
+window.order = {
   soup: null,
   main: null,
   salads_starters: null,
