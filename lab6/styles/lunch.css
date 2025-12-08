@@ -19,31 +19,37 @@
     border-bottom: 2px solid #eee;
 }
 
+/* Иконки */
 .combo-section {
-  max-width: 900px;
+  max-width: 1000px;
   margin: 40px auto;
   text-align: center;
+  padding: 0 16px;
 }
 
 .combo-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 35px 60px;
+  grid-auto-rows: auto;
+  gap: 40px 60px;
   justify-items: center;
 }
 
 .combo-card {
   display: flex;
-  flex-direction: row;       /* Иконки в строку */
+  flex-direction: row;
+  flex-wrap: nowrap;    
   align-items: flex-start;
   justify-content: center;
   gap: 26px;
+  width: 100%;
 }
 
 .combo-item {
   display: flex;
-  flex-direction: column;    /* Текст под иконкой */
+  flex-direction: column;
   align-items: center;
+  min-width: 70px;
 }
 
 .combo-item img {
@@ -522,6 +528,13 @@ footer {
 
 /* Адаптивность */
 @media (max-width: 900px) {
+  .combo-grid{
+    grid-template-columns: repeat(2,1fr);
+    gap: 30px 30px;
+  }
+  .combo-card{
+    gap: 20px;
+  }
   .order-container {
     grid-template-columns: 1fr;
     gap: 30px;
@@ -544,6 +557,20 @@ footer {
 }
 
 @media (max-width: 600px) {
+  .combo-grid {
+    grid-template-columns: 1fr;
+  }
+  .combo-card {
+    justify-content: center;
+    gap: 16px;
+  }
+  .combo-item img {
+    width: 42px;
+    height: 42px;
+  }
+  .combo-item p {
+    font-size: 13px;
+  }
   header {
     flex-direction: column;
     gap: 15px;
