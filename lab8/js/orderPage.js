@@ -1,13 +1,15 @@
 // js/orderPage.js
+
+const STORAGE_KEY = "lunchOrder";
+const saved = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+const container = document.querySelector(".order-dishes");
+
+
 document.addEventListener("DOMContentLoaded", async () => {
   await loadDishes();
   loadOrderFromStorage();
 
-  const STORAGE_KEY = "lunchOrder";
-  const saved = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
-  const container = document.querySelector(".order-dishes");
-
-  if (!Object.keys(saved).length) {
+    if (!Object.keys(saved).length) {
     container.innerHTML = `
       <p>
         Ничего не выбрано.
@@ -26,10 +28,11 @@ document.addEventListener("DOMContentLoaded", async () => {
       onClick: () => {
         removeDishFromOrder(category);
         card.remove();
-        updateOrderView();
+        
       }
     });
 
     container.appendChild(card);
   });
+  updateOrderView();
 });
