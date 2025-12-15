@@ -3,51 +3,33 @@ document.addEventListener("DOMContentLoaded", async () => {
   await loadDishes();
   loadOrderFromStorage();
 
-  renderOrder();
-  bindRemoveButtons();
-});
+  const STORAGE_KEY = "lunchOrder";
+  const saved = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+  const container = document.querySelector(".order-dishes");
 
-function renderOrder() {
-  const map = {
-    soup: "#order-soup",
-    main: "#order-main",
-    salad: "#order-salads_starters",
-    drink: "#order-drink",
-    dessert: "#order-desserts"
-  };
+  if (!Object.keys(saved).length) {
+    container.innerHTML = `
+      <p>
+        Ничего не выбрано.
+        <a href="lunch.html">Собрать ланч</a>
+      </p>
+    `;
+    return;
+  }
 
-  let total = 0;
-
-  Object.entries(map).forEach(([category, selector]) => {
-    const el = document.querySelector(selector);
-    if (!el) return;
-
-    const keyword = order[category];
-    if (!keyword) {
-      el.textContent = "Ничего не выбрано";
-      return;
-    }
-
+  Object.entries(saved).forEach(([category, keyword]) => {
     const dish = dishes.find(d => d.keyword === keyword);
     if (!dish) return;
 
-    el.textContent = `${dish.name} ${dish.price}₽`;
-    total += dish.price;
-  });
-
-  const totalEl = document.querySelector("#order-total");
-  if (totalEl) {
-    totalEl.textContent = `Стоимость заказа: ${total} ₽`;
-    totalEl.style.display = total ? "block" : "none";
-  }
-}
-
-function bindRemoveButtons() {
-  document.querySelectorAll(".remove-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const category = btn.dataset.category;
-      removeDishFromOrder(category);
-      renderOrder();
+    const card = renderDishCard(dish, {
+      mode: "remove",
+      onClick: () => {
+        removeDishFromOrder(category);
+        card.remove();
+        updateOrderView();
+      }
     });
+
+    container.appendChild(card);
   });
-}
+});
