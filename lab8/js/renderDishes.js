@@ -27,16 +27,40 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       container.appendChild(card);
     });
+
+    restoreSelectedDishes();
   }
 
+  // Фильтры
   Object.keys(sections).forEach(category => {
-    renderCategory(category);
+    const filterBlock = sections[category].querySelector(".filters");
+    if (!filterBlock) return;
+
+    const buttons = filterBlock.querySelectorAll("button");
+
+    buttons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        const isActive = btn.classList.contains("active");
+
+        // Снимаем активность со всех кнопок
+        buttons.forEach(b => b.classList.remove("active"));
+
+        if (!isActive) {
+          btn.classList.add("active");
+          renderCategory(category, btn.dataset.kind);
+        } else {
+          renderCategory(category, null);
+        }
+      });
+    });
+
+    renderCategory(category); // начальная отрисовка без фильтра
   });
 
   restoreSelectedDishes();
   updateCartPanel();
-
 });
+
 
 function restoreSelectedDishes() {
   const saved = JSON.parse(localStorage.getItem("lunchOrder")) || {};
