@@ -2,6 +2,8 @@
 document.addEventListener("DOMContentLoaded", async () => {
   await loadDishes();
 
+  loadOrderFromStorage();
+
   const sections = {
     soup: document.querySelector("#soup-section"),
     main: document.querySelector("#main-section"),
@@ -20,7 +22,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     list.forEach(dish => {
       const card = renderDishCard(dish, {
         mode: "add",
-        onClick: () => window.addDishToOrder(dish.keyword)
+        onClick: () => window.addDishToOrder
       });
 
       container.appendChild(card);
@@ -32,6 +34,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
   restoreSelectedDishes();
+  updateCartPanel();
+
 });
 
 function restoreSelectedDishes() {
@@ -43,4 +47,32 @@ function restoreSelectedDishes() {
   });
 }
 
-restoreSelectedDishes();
+function updateCartPanel() {
+  const panel = document.getElementById("cart-panel");
+  const totalEl = document.getElementById("cart-total");
+  const checkoutBtn = document.getElementById("checkout-link");
+
+  let total = 0;
+  Object.values(window.order || {}).forEach(dish => {
+    total += Number(dish.price);
+  });
+
+  totalEl.textContent = `${total} ₽`;
+
+  if (total > 0) {
+    panel.style.display = "flex";        // показываем панель
+    checkoutBtn.classList.remove("disabled");
+  } else {
+    panel.style.display = "none";        // скрываем если заказ пустой
+    checkoutBtn.classList.add("disabled");
+  }
+}
+
+// Переход на страницу заказа по клику на кнопку
+const checkoutBtn = document.getElementById("checkout-link");
+checkoutBtn.addEventListener("click", () => {
+  // Проверяем, что кнопка активна
+  if (!checkoutBtn.classList.contains("disabled")) {
+    window.location.href = "order.html";
+  }
+});

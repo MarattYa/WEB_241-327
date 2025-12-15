@@ -35,11 +35,14 @@ function addDishToOrder(keyword) {
 
   window.order[dish.category] = dish;
   saveOrder();
+  updateCartPanel();
 
   // Обновляем отображение заказа, если функция есть
   if (typeof updateOrderView === "function") {
     updateOrderView();
   }
+
+  if (typeof updateCartPanel === "function") updateCartPanel();
 }
 
 // Снять выделение с других блюд в категории
