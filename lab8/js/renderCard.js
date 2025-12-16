@@ -14,10 +14,14 @@ function renderDishCard(dish, { mode, onClick }) {
     <button class="add-btn">${buttonText}</button>
   `;
 
-  card.querySelector("button").addEventListener("click", e => {
-    e.stopPropagation();
-    onClick(dish.keyword);
-  });
+    card.addEventListener("click", () => {
+        onClick(dish.keyword);
+    });
+
+//   card.querySelector("button").addEventListener("click", e => {
+//     e.stopPropagation();
+//     onClick(dish.keyword);
+//   });
 
   return card;
 }
