@@ -36,18 +36,19 @@ function addDishToOrder(keyword) {
   window.order[dish.category] = dish;
   saveOrder();
   updateCartPanel();
-
   // Обновляем отображение заказа, если функция есть
-  if (typeof updateOrderView === "function") {
-    updateOrderView();
-  }
+  if (typeof updateOrderView === "function") updateOrderView();
 
-  if (typeof updateCartPanel === "function") updateCartPanel();
 }
 
 // Снять выделение с других блюд в категории
 function unselectCategory(category) {
-  const section = document.querySelector(`#${category}-section`);
+  const categoryMap = {
+    salad: "salads_starters",
+    dessert: "desserts"
+  };
+  const sectionId = categoryMap[category] || category;
+  const section = document.querySelector(`#${sectionId}-section`);
   if (!section) return;
 
   section.querySelectorAll(".dish.selected")

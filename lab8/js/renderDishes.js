@@ -12,24 +12,50 @@ document.addEventListener("DOMContentLoaded", async () => {
     dessert: document.querySelector("#desserts-section")
   };
 
-  function renderCategory(category, filter = null) {
-    const container = sections[category].querySelector(".data-dish");
-    container.innerHTML = "";
+function renderCategory(category, filter = null) {
+  const container = sections[category].querySelector(".data-dish");
+  container.innerHTML = "";
 
-    let list = dishes.filter(d => d.category === category);
-    if (filter) list = list.filter(d => d.kind === filter);
+  let list = dishes.filter(d => d.category === category);
+  if (filter) list = list.filter(d => d.kind === filter);
 
-    list.forEach(dish => {
-      const card = renderDishCard(dish, {
-        mode: "add",
-        onClick: () => window.addDishToOrder
-      });
+  list.forEach(dish => {
+    const card = renderDishCard(dish, {
+      mode: "add",
+      onClick: () => {
+        // Анимация "летящей карточки"
+        const rect = card.getBoundingClientRect();
+        const scrollTop = window.scrollY || window.pageYOffset;
+        const scrollLeft = window.scrollX || window.pageXOffset;
 
-      container.appendChild(card);
+        const clone = card.cloneNode(true);
+        clone.classList.add("flying");
+        clone.style.position = "absolute";
+        clone.style.left = rect.left + scrollLeft + "px";
+        clone.style.top = rect.top + scrollTop + "px";
+        clone.style.width = rect.width + "px";
+        clone.style.height = rect.height + "px";
+        clone.style.zIndex = 999;
+        document.body.appendChild(clone);
+
+        const targetY = window.innerHeight - 80;
+        requestAnimationFrame(() => {
+          clone.style.transform = `translateY(${targetY - rect.top}px) scale(0.2)`;
+          clone.style.opacity = "0";
+        });
+
+        setTimeout(() => clone.remove(), 600);
+
+        // Добавление блюда в заказ
+        window.addDishToOrder(dish.keyword);
+      }
     });
 
-    restoreSelectedDishes();
-  }
+    container.appendChild(card);
+  });
+
+  restoreSelectedDishes(); // чтобы выбранные блюда остались выделены
+}
 
   // Фильтры
   Object.keys(sections).forEach(category => {
