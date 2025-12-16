@@ -1,139 +1,392 @@
 /* =========================
-   ORDER PAGE
+   ORDER PAGE STYLES (точно как lunch.css)
 ========================= */
 
+/* Общие стили страницы */
 body {
   background-color: #f5f5f5;
+  font-family: 'Inter', sans-serif;
 }
 
-/* Общая секция */
-.order-section {
-  max-width: 1200px;
-  margin: 40px auto;
-  padding: 0 20px;
+h2 {
+  text-align: center ;
+  padding-bottom: 20px;
 }
 
-.order-section h2 {
-  text-align: center;
-  font-size: 2rem;
-  color: #2c3e50;
-  margin-bottom: 40px;
-}
-
-/* Контейнер */
-.order-container {
-  display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 40px;
-  background: white;
-  padding: 40px;
-  border-radius: 16px;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-}
-
-/* =========================
-   КАРТОЧКИ В ЗАКАЗЕ
-========================= */
-
+/* Карточки заказанных блюд */
 .order-dishes {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 30px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
 }
 
-/* Переиспользуем dish */
 .order-dishes .dish {
-  background: #fff;
-  border-radius: 16px;
-  padding: 20px;
-  text-align: center;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
-  border: 2px solid tomato;
-  display: flex;
-  flex-direction: column;
-  transition: 0.3s;
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid transparent;
 }
 
 .order-dishes .dish img {
-  width: 100%;
-  height: 220px;
-  object-fit: cover;
-  border-radius: 10px;
-  margin-bottom: 15px;
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 15px;
 }
 
-.order-dishes .dish h3 {
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: #333;
-  margin-bottom: 8px;
+.order-dishes .dish .name {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #333;
 }
 
 .order-dishes .dish .price {
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: tomato;
-  margin: 8px 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: tomato;
+    margin: 5px 0;
 }
 
-/* =========================
-   КНОПКА УДАЛЕНИЯ
-========================= */
+.order-dishes .dish .weight {
+    color: #777;
+    font-size: 1rem;
+    margin-top: 5px;
+}
 
+/* Кнопка удалить */
 .order-dishes .dish button {
-  margin-top: auto;
-  padding: 12px 28px;
-  background: #ffeceb;
-  color: tomato;
-  border: 2px solid tomato;
+    margin-top: auto;
+    padding: 12px 32px;
+    background: #f1eee9;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.2s;
+    font-size: 1rem;
+}
+
+.order-dishes .dish:hover button {
+    background-color: tomato;
+    color: white;
+}
+
+/* Hover карточки */
+.order-dishes .dish:hover:not(.selected) {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    border-color: tomato;
+    border-width: 3px;
+}
+
+/* Выбранное блюдо */
+.order-dishes .dish.selected {
+    border: 3px solid tomato;
+    transform: scale(1.03);
+    box-shadow: 0 10px 20px rgba(255, 99, 71, 0.25);
+}
+
+.order-dishes .dish.selected:hover {
+    transform: scale(1.03) translateY(-5px);
+    box-shadow: 0 15px 25px rgba(255, 99, 71, 0.3);
+}
+
+.order-dishes .dish.selected button {
+    background-color: tomato;
+    color: white;
+}
+
+/************************************
+        ОФОРМЛЕНИЕ ЗАКАЗА
+************************************/
+
+/* Секция заказа */
+.order-section {
+  max-width: 1200px;
+  margin: 10px auto;
+  padding: 0 20px;
+}
+
+.order-title {
+  text-align: center;
+  font-size: 2rem;
+  color: #2c3e50;
+  margin-top: 30px;
+}
+
+.order-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  background: white;
+  padding: 40px;
   border-radius: 10px;
-  cursor: pointer;
-  font-size: 1rem;
-  font-weight: 600;
-  transition: all 0.2s ease;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
 }
 
-.order-dishes .dish button:hover {
-  background: tomato;
-  color: white;
+/* Левый блок - Заказ */
+.order-left {
+  padding-right: 30px;
+  border-right: 1px solid #eee;
 }
 
-/* =========================
-   ПРАВАЯ КОЛОНКА
-========================= */
-
-.order-right h3 {
+.order-left h3, .order-right h3 {
   font-size: 1.3rem;
   color: #2c3e50;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
   padding-bottom: 10px;
   border-bottom: 2px solid #eee;
 }
 
-.order-summary {
-  margin-top: 20px;
+/* Элементы заказа */
+.order-category {
+  margin-bottom: 20px;
 }
 
-.order-total {
+.order-category strong {
+  display: block;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 8px;
+  font-size: 1.1rem;
+}
+
+.order-item {
+  font-size: 1rem;
+  color: #555;
+  margin-left: 10px;
+  min-height: 24px;
+}
+
+.order-item.empty {
+  color: #999;
+  font-style: italic;
+}
+
+#order-total {
   margin-top: 30px;
   padding-top: 20px;
-  border-top: 2px solid tomato;
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: tomato;
+  border-top: 2px solid #ff6347;
 }
 
-/* =========================
-   АДАПТИВ
-========================= */
+#order-total-price {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ff6347;
+}
 
+/* Комментарии к заказу */
+.comments-section textarea {
+  width: 100%;
+  height: 100px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 0.95rem;
+  resize: vertical;
+}
+
+.comments-section {
+  margin-top: 30px;
+}
+
+.comments-section h4 {
+  font-size: 1.1rem;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+
+
+/* Правый блок - Данные */
+.order-right input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 1rem;
+}
+
+.order-right input:focus {
+    outline: none;
+    border-color: tomato;
+    box-shadow: 0 0 0 2px rgba(255, 99, 71, 0.1);
+}
+
+/* Кнопки формы */
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.form-actions button {
+    padding: 12px 30px;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 1rem;
+    cursor: pointer;
+    border: none;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.form-actions button[type="reset"] {
+    background: #f0f0f0;
+}
+
+.form-actions button[type="submit"] {
+    background: tomato;
+    color: white;
+}
+
+.order-right {
+  padding-left: 30px;
+}
+
+.order-right label {
+  display: block;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+  margin-top: 15px;
+}
+
+.order-right input[type="text"],
+.order-right input[type="email"],
+.order-right input[type="tel"],
+.order-right input[type="time"] {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  margin-bottom: 5px;
+}
+
+.order-right input:focus {
+  outline: none;
+  border-color: #ff6347;
+  box-shadow: 0 0 0 2px rgba(255, 99, 71, 0.1);
+}
+
+/* информация о скидках */
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.checkbox-row input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+}
+
+.checkbox-row label {
+  margin: 0;
+  font-weight: normal;
+}
+
+.delivery-note {
+  color: #666;
+  font-size: 0.9rem;
+  margin: 15px 0;
+  padding-left: 10px;
+  border-left: 3px solid #ff6347;
+}
+
+.delivery-label {
+  font-weight: 600;
+  color: #333;
+  margin: 20px 0 10px 0;
+}
+
+/* Кнопки время доставки */
+.radio-row {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 20px;
+}
+
+.radio-row label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: normal;
+  margin: 0;
+  cursor: pointer;
+}
+
+.radio-row input[type="radio"] {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+}
+
+/* Кнопки  сбросить/отправить */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.form-actions button {
+  padding: 12px 30px;
+  border-radius: 8px;
+  font-family: 'Roboto Mono', monospace;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  border: none;
+}
+
+.form-actions button[type="reset"] {
+  background: #f0f0f0;
+  color: #666;
+}
+
+.form-actions button[type="reset"]:hover {
+  background: #e0e0e0;
+}
+
+.form-actions button[type="submit"] {
+  background: #ff6347;
+  color: white;
+}
+
+.form-actions button[type="submit"]:hover {
+  background: #ff4c2c;
+}
+
+
+/* Адаптив */
 @media (max-width: 900px) {
   .order-container {
     grid-template-columns: 1fr;
-    padding: 25px;
+    gap: 30px;
+    padding: 20px;
   }
 
   .order-dishes {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .order-dishes .dish img {
+    height: 220px;
   }
 }
