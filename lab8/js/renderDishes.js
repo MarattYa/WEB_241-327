@@ -19,8 +19,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (filter) list = list.filter(d => d.kind === filter);
 
     list.forEach(dish => {
+      const mode = window.order[dish.category]?.keyword === dish.keyword ? "remove" : "add";
+
       const card = renderDishCard(dish, {
-        mode: "add",
+        mode,
         onClick: () => handleAddDish(dish, card)
       });
       container.appendChild(card);
@@ -30,32 +32,34 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   function handleAddDish(dish, card) {
-    // Анимация "летящей карточки"
-    const rect = card.getBoundingClientRect();
-    const scrollTop = window.scrollY || window.pageYOffset;
-    const scrollLeft = window.scrollX || window.pageXOffset;
+    if (window.order[dish.category]?.keyword === dish.keyword){
+      window.removeDishFromOrder(dish.category);
+    } else {
+      // Анимация "летящей карточки"
+      const rect = card.getBoundingClientRect();
+      const scrollTop = window.scrollY || window.pageYOffset;
+      const scrollLeft = window.scrollX || window.pageXOffset;
 
-    const clone = card.cloneNode(true);
-    clone.classList.add("flying");
-    clone.style.position = "absolute";
-    clone.style.left = rect.left + scrollLeft + "px";
-    clone.style.top = rect.top + scrollTop + "px";
-    clone.style.width = rect.width + "px";
-    clone.style.height = rect.height + "px";
-    clone.style.zIndex = 999;
-    document.body.appendChild(clone);
-
-    const targetY = window.innerHeight - 80;
-    requestAnimationFrame(() => {
-      clone.style.transform = `translateY(${targetY - rect.top}px) scale(0.2)`;
-      clone.style.opacity = "0";
-    });
-
-    setTimeout(() => clone.remove(), 600);
-
-    // Добавление блюда в заказ
-    window.addDishToOrder(dish.keyword);
+      const clone = card.cloneNode(true);
+      clone.classList.add("flying");
+      clone.style.position = "absolute";
+      clone.style.left = rect.left + scrollLeft + "px";
+      clone.style.top = rect.top + scrollTop + "px";
+      clone.style.width = rect.width + "px";
+      clone.style.height = rect.height + "px";
+      clone.style.zIndex = 999;
+      document.body.appendChild(clone);
+      const targetY = window.innerHeight - 80;
+      requestAnimationFrame(() => {
+        clone.style.transform = `translateY(${targetY - rect.top}px) scale(0.2)`;
+        clone.style.opacity = "0";
+      });
+      setTimeout(() => clone.remove(), 600);
+      window.addDishToOrder(dish.keyword);
+    }
+    
     highlightSelected();
+    window.updateCartPanel();
   }
 
   function highlightSelected() {

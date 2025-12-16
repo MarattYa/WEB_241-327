@@ -80,9 +80,9 @@ window.updateOrderView = function() {
   const fields = {
     soup: document.getElementById("order-soup"),
     main: document.getElementById("order-main"),
-    salads_starters: document.getElementById("order-salads_starters"),
+    salad: document.getElementById("order-salads_starters"),
     drink: document.getElementById("order-drink"),
-    desserts: document.getElementById("order-desserts"),
+    dessert: document.getElementById("order-desserts"),
   };
 
   const totalEl = document.getElementById("order-total");
