@@ -43,15 +43,12 @@ function addDishToOrder(keyword) {
 
 // Снять выделение с других блюд в категории
 function unselectCategory(category) {
-  const categoryMap = {
-    salad: "salads_starters",
-    dessert: "desserts"
-  };
-  const sectionId = categoryMap[category] || category;
-  const section = document.querySelector(`#${sectionId}-section`);
+
+  const section = document.querySelector(`#${category}-section`);
   if (!section) return;
 
-  section.querySelectorAll(".dish.selected")
+  section
+    .querySelectorAll(".dish.selected")
     .forEach(card => card.classList.remove("selected"));
 }
 
