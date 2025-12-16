@@ -1,18 +1,17 @@
-// Используем глобальную переменную, если её ещё нет
+// js/order.js
 window.STORAGE_KEY = window.STORAGE_KEY || "lunchOrder";
 window.order = window.order || {};
 
-// Загружаем заказ из localStorage
+// Загрузка заказа из localStorage
 function loadOrderFromStorage() {
   const saved = JSON.parse(localStorage.getItem(window.STORAGE_KEY)) || {};
-
   Object.entries(saved).forEach(([category, keyword]) => {
-    const dish = dishes.find(d => d.keyword === keyword); // исправлено JSONkeyword → keyword
+    const dish = dishes.find(d => d.keyword === keyword);
     if (dish) window.order[category] = dish;
   });
 }
 
-// Сохраняем заказ в localStorage
+// Сохранение заказа
 function saveOrder() {
   const toSave = {};
   Object.entries(window.order).forEach(([category, dish]) => {
@@ -21,39 +20,63 @@ function saveOrder() {
   localStorage.setItem(window.STORAGE_KEY, JSON.stringify(toSave));
 }
 
-// Добавление блюда в заказ
-function addDishToOrder(keyword) {
+// Добавление блюда
+window.addDishToOrder = function(keyword) {
   const dish = dishes.find(d => d.keyword === keyword);
   if (!dish) return;
 
-  // снять подсветку с других блюд в категории
   unselectCategory(dish.category);
-
-  // подсветить текущую карточку
-  const card = document.querySelector(`.dish[data-dish="${keyword}"]`);
-  if (card) card.classList.add("selected");
-
   window.order[dish.category] = dish;
   saveOrder();
-  updateCartPanel();
-  // Обновляем отображение заказа, если функция есть
-  if (typeof updateOrderView === "function") updateOrderView();
 
-}
+  // Только если элементы существуют
+  if (typeof window.updateCartPanel === "function") window.updateCartPanel();
+  if (typeof window.updateOrderView === "function") window.updateOrderView();
+};
 
-// Снять выделение с других блюд в категории
+// Удаление блюда
+window.removeDishFromOrder = function(category) {
+  delete window.order[category];
+  saveOrder();
+  if (typeof window.updateCartPanel === "function") window.updateCartPanel();
+  if (typeof window.updateOrderView === "function") window.updateOrderView();
+};
+
+// Снимаем подсветку с других карточек в категории
 function unselectCategory(category) {
-
   const section = document.querySelector(`#${category}-section`);
   if (!section) return;
 
-  section
-    .querySelectorAll(".dish.selected")
+  section.querySelectorAll(".dish.selected")
     .forEach(card => card.classList.remove("selected"));
 }
 
-//обновление текстовых полей выбранных блюд и итоговой суммы
-function updateOrderView() {
+// Обновление панели заказа (для lunch.html)
+window.updateCartPanel = function() {
+  const panel = document.getElementById("cart-panel");
+  const totalEl = document.getElementById("cart-total");
+  const checkoutBtn = document.getElementById("checkout-link");
+
+  if (!panel || !totalEl || !checkoutBtn) return; // проверяем существование
+
+  let total = 0;
+  Object.values(window.order || {}).forEach(dish => {
+    total += Number(dish.price);
+  });
+
+  totalEl.textContent = `${total} ₽`;
+
+  if (total > 0) {
+    panel.style.display = "flex";
+    checkoutBtn.classList.remove("disabled");
+  } else {
+    panel.style.display = "none";
+    checkoutBtn.classList.add("disabled");
+  }
+};
+
+// Обновление заказа (для order.html)
+window.updateOrderView = function() {
   const fields = {
     soup: document.getElementById("order-soup"),
     main: document.getElementById("order-main"),
@@ -62,8 +85,10 @@ function updateOrderView() {
     desserts: document.getElementById("order-desserts"),
   };
 
-  let total = 0;
+  const totalEl = document.getElementById("order-total");
+  if (!totalEl) return; // проверяем существование
 
+  let total = 0;
   Object.entries(window.order).forEach(([category, dish]) => {
     if (fields[category]) {
       fields[category].textContent = dish.name;
@@ -71,11 +96,10 @@ function updateOrderView() {
     }
   });
 
-  const totalEl = document.getElementById("order-total");
   if (total > 0) {
     totalEl.style.display = "block";
     totalEl.textContent = `Итоговая стоимость: ${total} ₽`;
   } else {
     totalEl.style.display = "none";
   }
-}
+};
