@@ -17,11 +17,6 @@ function renderDishCard(dish, { mode, onClick }) {
     card.addEventListener("click", () => {
         onClick(dish.keyword);
     });
-
-//   card.querySelector("button").addEventListener("click", e => {
-//     e.stopPropagation();
-//     onClick(dish.keyword);
-//   });
-
+    
   return card;
 }

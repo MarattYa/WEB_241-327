@@ -21,98 +21,107 @@
   </header>
 
   <main>
+    <div class="order-empty" style="display:none">
+      <p class="empty-text">
+        Вы ничего не выбрали 😢<br>
+        Сначала соберите ланч
+      </p>
+      <a href="lunch.html" class="back-btn">Собрать ланч</a>
+    </div>
+    
+
     <!-- Форма заказа -->
-  <section class="order-section">
-    <h2>Состав заказа</h2>
-    <div class="order-dishes"></div>
+    <section class="order-section">
+      <h2>Состав заказа</h2>
+      <div class="order-dishes"></div>
 
-    <h2 class="order-title">Оформление заказа</h2>
+      <h2 class="order-title">Оформление заказа</h2>
 
-    <form class="order-form" action="https://httpbin.org/post" method="post" novalidate>
-      <div class="order-container">
-        <!-- Левый блок — Ваш заказ (будет заполнен через JS) -->
-        <div class="order-block order-left">
-          <h3>Ваш заказ</h3>
-          <div class="order-summary" id="order-summary">
-            <div class="order-item">
-              <h4>Суп</h4>
-              <p id="order-soup">Ничего не выбрано</p>
+      <form class="order-form" action="https://httpbin.org/post" method="post" novalidate>
+        <div class="order-container">
+          <!-- Левый блок — Ваш заказ (будет заполнен через JS) -->
+          <div class="order-block order-left">
+            <h3>Ваш заказ</h3>
+            <div class="order-summary" id="order-summary">
+              <div class="order-item">
+                <h4>Суп</h4>
+                <p id="order-soup">Ничего не выбрано</p>
+              </div>
+
+              <div class="order-item">
+                <h4>Главное блюдо</h4>
+                <p id="order-main">Ничего не выбрано</p>
+              </div>
+
+              <div class="order-item">
+                <h4>Салат/стартер</h4>
+                <p id="order-salads_starters">Ничего не выбрано</p>
+              </div>
+
+              <div class="order-item">
+                <h4>Напиток</h4>
+                <p id="order-drink">Ничего не выбрано</p>
+              </div>
+
+              <div class="order-item">
+                <h4>Десерт</h4>
+                <p id="order-desserts">Ничего не выбрано</p>
+              </div>
+
+              <div class="order-total" id="order-total" style="display:none;">
+                Итоговая стоимость: 0 ₽
+              </div>
             </div>
-
-            <div class="order-item">
-              <h4>Главное блюдо</h4>
-              <p id="order-main">Ничего не выбрано</p>
-            </div>
-
-            <div class="order-item">
-              <h4>Салат/стартер</h4>
-              <p id="order-salads_starters">Ничего не выбрано</p>
-            </div>
-
-            <div class="order-item">
-              <h4>Напиток</h4>
-              <p id="order-drink">Ничего не выбрано</p>
-            </div>
-
-            <div class="order-item">
-              <h4>Десерт</h4>
-              <p id="order-desserts">Ничего не выбрано</p>
-            </div>
-
-            <div class="order-total" id="order-total" style="display:none;">
-              Итоговая стоимость: 0 ₽
+            
+            <div class="comments-section">
+              <h4>Комментарии к заказу</h4>
+              <textarea name="comments" placeholder="Дополнительные пожелания..."></textarea>
             </div>
           </div>
-          
-          <div class="comments-section">
-            <h4>Комментарии к заказу</h4>
-            <textarea name="comments" placeholder="Дополнительные пожелания..."></textarea>
+
+          <!-- Правый блок — Данные клиента -->
+          <div class="order-block order-right">
+            <h3>Ваши данные</h3>
+            
+            <label for="name">Имя</label>
+            <input id="name" name="name" type="text" required placeholder="Ваше имя">
+
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" required placeholder="email@domain.ru">
+
+            <div class="checkbox-row">
+              <input id="subscribe" name="subscribe" type="checkbox" checked>
+              <label for="subscribe">Получать информацию о скидках и акциях</label>
+            </div>
+
+            <label for="phone">Номер телефона</label>
+            <input id="phone" name="phone" type="tel" required placeholder="+7-9xx-xxx-xx-xx">
+
+            <label for="address">Адрес доставки</label>
+            <input id="address" name="address" type="text" required placeholder="Улица, дом, кв.">
+            
+            <p class="delivery-note"><em>Доставка осуществляется только по Москве</em></p>
+
+            <p class="delivery-label">Время доставки:</p>
+            <div class="radio-row">
+              <input id="asap" name="delivery_mode" type="radio" value="asap" checked required>
+              <label for="asap">Как можно скорее</label>
+
+              <input id="at_time" name="delivery_mode" type="radio" value="at_time">
+              <label for="at_time">К указанному времени</label>
+            </div>
+
+            <label for="delivery_time">Укажите время</label>
+            <input id="delivery_time" name="delivery_time" type="time" min="07:00" max="23:00" step="300" value="12:00">
+
+            <div class="form-actions">
+              <button type="reset">Сбросить</button>
+              <button type="submit">Отправить</button>
+            </div>
           </div>
         </div>
-
-        <!-- Правый блок — Данные клиента -->
-        <div class="order-block order-right">
-          <h3>Ваши данные</h3>
-          
-          <label for="name">Имя</label>
-          <input id="name" name="name" type="text" required placeholder="Ваше имя">
-
-          <label for="email">Email</label>
-          <input id="email" name="email" type="email" required placeholder="email@domain.ru">
-
-          <div class="checkbox-row">
-            <input id="subscribe" name="subscribe" type="checkbox" checked>
-            <label for="subscribe">Получать информацию о скидках и акциях</label>
-          </div>
-
-          <label for="phone">Номер телефона</label>
-          <input id="phone" name="phone" type="tel" required placeholder="+7-9xx-xxx-xx-xx">
-
-          <label for="address">Адрес доставки</label>
-          <input id="address" name="address" type="text" required placeholder="Улица, дом, кв.">
-          
-          <p class="delivery-note"><em>Доставка осуществляется только по Москве</em></p>
-
-          <p class="delivery-label">Время доставки:</p>
-          <div class="radio-row">
-            <input id="asap" name="delivery_mode" type="radio" value="asap" checked required>
-            <label for="asap">Как можно скорее</label>
-
-            <input id="at_time" name="delivery_mode" type="radio" value="at_time">
-            <label for="at_time">К указанному времени</label>
-          </div>
-
-          <label for="delivery_time">Укажите время</label>
-          <input id="delivery_time" name="delivery_time" type="time" min="07:00" max="23:00" step="300" value="12:00">
-
-          <div class="form-actions">
-            <button type="reset">Сбросить</button>
-            <button type="submit">Отправить</button>
-          </div>
-        </div>
-      </div>
-    </form>
-  </section>
+      </form>
+    </section>
   </main>
 
     <footer>
@@ -120,8 +129,8 @@
   </footer>
 
   <script src="js/dishes.js"></script>
-  <script src="js/order.js"></script>
   <script src="js/renderCard.js"></script>
+  <script src="js/order.js"></script>
   <script src="js/orderPage.js"></script>
 </body>
 </html>

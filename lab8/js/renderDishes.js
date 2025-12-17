@@ -109,6 +109,19 @@ Object.keys(sections).forEach(category => {
     }
   });
 
+  // Дополнительно: обработка ссылки в header
+  const orderLink = document.querySelector('nav a[href="order.html"]');
+  if (orderLink) {
+    orderLink.addEventListener("click", (e) => {
+      const orderEntries = Object.entries(window.order || {});
+      if (orderEntries.length === 0) {
+        e.preventDefault(); // Отменяем переход
+        alert("Вы не выбрали ни одного блюда. Сначала соберите ланч!");
+      }
+      // Если есть блюда — переход разрешён
+    });
+  }
+
   // Начальное обновление панели
   window.updateCartPanel();
 });

@@ -3,19 +3,24 @@ window.STORAGE_KEY = window.STORAGE_KEY || "lunchOrder";
 window.order = window.order || {};
 
 // Загрузка заказа из localStorage
-function loadOrderFromStorage() {
+window.loadOrderFromStorage = function () {
   const saved = JSON.parse(localStorage.getItem(window.STORAGE_KEY)) || {};
+
+  window.order = {}; // 🔥 сбрасываем перед восстановлением
+
   Object.entries(saved).forEach(([category, keyword]) => {
     const dish = dishes.find(d => d.keyword === keyword);
-    if (dish) window.order[category] = dish;
+    if (dish) {
+      window.order[category] = dish;
+    }
   });
-}
+};
 
 // Сохранение заказа
 function saveOrder() {
   const toSave = {};
   Object.entries(window.order).forEach(([category, dish]) => {
-    toSave[category] = dish.keyword;
+    toSave[category] = dish.keyword; // ✅ ТОЛЬКО keyword
   });
   localStorage.setItem(window.STORAGE_KEY, JSON.stringify(toSave));
 }

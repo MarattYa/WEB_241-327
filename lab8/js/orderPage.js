@@ -1,35 +1,81 @@
 // js/orderPage.js
+
 document.addEventListener("DOMContentLoaded", async () => {
-  await loadDishes();
-  window.loadOrderFromStorage();
+  await loadDishes();               // грузим блюда с сервера
+  window.loadOrderFromStorage();    // восстанавливаем order из localStorage
+  renderOrderPage();
+});
 
-  const container = document.querySelector(".order-dishes");
-  const saved = JSON.parse(localStorage.getItem("lunchOrder")) || {};
+function renderOrderPage() {
+  const orderDishesContainer = document.querySelector(".order-dishes");
+  const orderForm = document.querySelector(".order-form");
+  const emptyBlock = document.querySelector(".order-empty");
+  const totalEl = document.getElementById("order-total");
 
-  if (!Object.keys(saved).length) {
-    container.innerHTML = `
-      <p>
-        Ничего не выбрано.
-        <a href="lunch.html">Собрать ланч</a>
-      </p>
-    `;
+  orderDishesContainer.innerHTML = "";
+
+  const orderEntries = Object.entries(window.order);
+  let total = 0;
+
+  // ❌ Если ничего не выбрано
+  if (orderEntries.length === 0) {
+    emptyBlock.style.display = "block";
+    orderForm.style.display = "none";
+    totalEl.style.display = "none";
     return;
   }
 
-  Object.entries(saved).forEach(([category, keyword]) => {
-    const dish = dishes.find(d => d.keyword === keyword);
-    if (!dish) return;
+  // ✅ Если есть выбранные блюда
+  emptyBlock.style.display = "none";
+  orderForm.style.display = "block";
 
-    const card = renderDishCard(dish, {
-      mode: "remove",
-      onClick: () => {
-        window.removeDishFromOrder(category);
-        card.remove();
-      }
-    });
+  // Обновляем summary + карточки
+  const summaryFields = {
+    soup: document.getElementById("order-soup"),
+    main: document.getElementById("order-main"),
+    salad: document.getElementById("order-salads_starters"),
+    drink: document.getElementById("order-drink"),
+    dessert: document.getElementById("order-desserts"),
+  };
 
-    container.appendChild(card);
+  // Сбрасываем summary
+  Object.values(summaryFields).forEach(el => {
+    if (el) el.textContent = "Ничего не выбрано";
   });
 
-  window.updateOrderView();
-});
+  orderEntries.forEach(([category, dish]) => {
+    total += Number(dish.price);
+
+    // summary
+    if (summaryFields[category]) {
+      summaryFields[category].textContent = `${dish.name} — ${dish.price} ₽`;
+    }
+
+    // карточка блюда
+    const card = createOrderDishCard(dish, category);
+    orderDishesContainer.appendChild(card);
+  });
+
+  // итоговая стоимость
+  totalEl.style.display = "block";
+  totalEl.textContent = `Итоговая стоимость: ${total} ₽`;
+}
+
+function createOrderDishCard(dish, category) {
+  const div = document.createElement("div");
+  div.className = "dish";
+
+  div.innerHTML = `
+    <img src="${dish.image}" alt="${dish.name}">
+    <h3>${dish.name}</h3>
+    <p class="price">${dish.price} ₽</p>
+    <button type="button" class="remove-btn">Удалить</button>
+  `;
+
+  div.querySelector("button").addEventListener("click", () => {
+    window.removeDishFromOrder(category);
+    renderOrderPage();
+  });
+
+  return div;
+}
