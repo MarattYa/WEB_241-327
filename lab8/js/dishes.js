@@ -7,10 +7,7 @@ const CATEGORY_NORMALIZE_MAP = {
 };
 
 async function loadDishes() {
-  const response = await fetch(
-    'http://lab7-api.std-900.ist.mospolytech.ru/api/dishes'
-  );
-
+  const response = await fetch('https://edu.std-900.ist.mospolytech.ru/labs/api/dishes');
   const raw = await response.json();
 
   dishes = raw.map(dish => ({

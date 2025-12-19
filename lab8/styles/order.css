@@ -395,6 +395,16 @@ h2 {
   background: #ff4c2c;
 }
 
+.input-error {
+  border: 2px solid red;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.85rem;
+  margin: 2px;
+}
+
 
 /* Адаптив */
 @media (max-width: 900px) {

@@ -6,10 +6,10 @@ window.order = window.order || {};
 window.loadOrderFromStorage = function () {
   const saved = JSON.parse(localStorage.getItem(window.STORAGE_KEY)) || {};
 
-  window.order = {}; // 🔥 сбрасываем перед восстановлением
+  window.order = {}; 
 
-  Object.entries(saved).forEach(([category, keyword]) => {
-    const dish = dishes.find(d => d.keyword === keyword);
+  Object.entries(saved).forEach(([category, id]) => {
+    const dish = dishes.find(d => d.id === id);
     if (dish) {
       window.order[category] = dish;
     }
@@ -20,14 +20,14 @@ window.loadOrderFromStorage = function () {
 function saveOrder() {
   const toSave = {};
   Object.entries(window.order).forEach(([category, dish]) => {
-    toSave[category] = dish.keyword; // ✅ ТОЛЬКО keyword
+    toSave[category] = dish.id; 
   });
   localStorage.setItem(window.STORAGE_KEY, JSON.stringify(toSave));
 }
 
 // Добавление блюда
-window.addDishToOrder = function(keyword) {
-  const dish = dishes.find(d => d.keyword === keyword);
+window.addDishToOrder = function(id) {
+  const dish = dishes.find(d => d.id === id);
   if (!dish) return;
 
   unselectCategory(dish.category);

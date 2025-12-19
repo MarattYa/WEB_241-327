@@ -5,55 +5,95 @@ document.addEventListener("DOMContentLoaded", async () => {
   window.loadOrderFromStorage();    // восстанавливаем order из localStorage
   renderOrderPage();
 
-  const submitBtn = document.getElementById("submit-order");
-  if (submitBtn) {
-    submitBtn.addEventListener("click", submitOrder);
+  const orderForm = document.querySelector(".order-form");
+  if(orderForm){
+    orderForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const ok = validateFormFields();
+      if (ok) await submitOrder();
+    });
   }
+});
+//подстветка при вводе/выборе
+document.querySelectorAll("#name, #email, #phone, #address").forEach(input => {
+  input.addEventListener("input", () =>{
+    input.classList.remove("input-error");
+    const msg = input.nextElementSibling;
+    if(msg && msg.classList.contains("error-message")) msg.remove();
+  });  
+  input.addEventListener("blur", () => validateField(input)); 
+});
+
+document.querySelectorAll('input[name="delivery_mode"]').forEach(radio => {
+  radio.addEventListener("change", () => {
+    const container = document.getElementById("delivery_type_container");
+    container.classList.remove("input-error");
+    const msg = container.querySelector(".error-message");
+    if(msg) msg.remove();
+  });
 });
 
 async function submitOrder() {
-  const orderEntries = Object.entries(window.order);
-  if (orderEntries.length === 0) {
-    alert("Вы не выбрали ни одного блюда. Сначала соберите ланч!");
-    return;
-  }
 
-  if(typeof window.checkLunch === "function"){
+  //Проверка состава заказа
+  if(typeof window.checkLunch === "function") {
     const ok = window.checkLunch();
     if(!ok) return;
   }
 
-  // Получаем данные из формы
-  const full_name = document.getElementById("full_name")?.value.trim();
+  if(!validateFormFields()) return;
+
+    // Получаем данные из формы
+  const full_name = document.getElementById("name")?.value.trim();
   const email = document.getElementById("email")?.value.trim();
   const phone = document.getElementById("phone")?.value.trim();
-  const delivery_address = document.getElementById("delivery_address")?.value.trim();
-  const delivery_type = document.querySelector('input[name="delivery_type"]:checked')?.value;
+  const delivery_address = document.getElementById("address")?.value.trim();
+  const delivery_type = document.querySelector('input[name="delivery_mode"]:checked')?.value;
   const delivery_time = document.getElementById("delivery_time")?.value;
   const subscribe = document.getElementById("subscribe")?.checked ? 1 : 0;
   const comment = document.getElementById("comment")?.value.trim();
 
-  if (!full_name || !email || !phone || !delivery_address || !delivery_type) {
-    alert("Пожалуйста, заполните все обязательные поля!");
-    return;
-  }
-
-  // Формируем объект для отправки
-  const payload = {
+    // Формируем объект для отправки
+    const payload = {
     full_name,
     email,
     phone,
     delivery_address,
     delivery_type,
-    delivery_time: delivery_type === "by_time" ? delivery_time : null,
     subscribe,
-    comment,
-    soup_id: window.order.soup?.id || null,
-    main_course_id: window.order.main?.id || null,
-    salad_id: window.order.salad?.id || null,
-    drink_id: window.order.drink?.id || null,
-    dessert_id: window.order.dessert?.id || null,
+    comment: comment || null,
   };
+
+  // Доп проверка времени
+  if(delivery_type === "by_time"){
+    if(!delivery_time) {
+      alert("Пожалуйста, укажите время доставки");
+      return;
+    }
+
+    const now = new Date();
+    const [hours, minutes] = delivery_time.split(":").map(Number);
+    const deliveryDate = new Date();
+    deliveryDate.setHours(hours, minutes, 0, 0);
+
+    if (deliveryDate < now) {
+      alert("Время доставки не может быть раньше текущего времени");
+      return;
+    }
+    payload.delivery_time = delivery_time;
+  }
+
+  if (delivery_type === "at_time") {
+    payload.delivery_time = delivery_time;
+  }
+
+
+  // добавляем ТОЛЬКО выбранные блюда
+  if (window.order.soup) payload.soup_id = window.order.soup.id;
+  if (window.order.main) payload.main_course_id = window.order.main.id;
+  if (window.order.salad) payload.salad_id = window.order.salad.id;
+  if (window.order.drink) payload.drink_id = window.order.drink.id;
+  if (window.order.dessert) payload.dessert_id = window.order.dessert.id;
 
   try {
     const apiKey = "fa539060-cd45-4c8b-bfcd-db8592ca8e11"; 
@@ -62,7 +102,7 @@ async function submitOrder() {
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify(payload)
+      body: JSON.stringify(payload),
     });
 
     const result = await response.json();
@@ -72,6 +112,7 @@ async function submitOrder() {
     }
 
     alert("Заказ успешно оформлен!");
+
     // Очистка localStorage и текущего заказа
     localStorage.removeItem(window.STORAGE_KEY);
     window.order = {};
@@ -85,7 +126,6 @@ async function submitOrder() {
 function renderOrderPage() {
   const orderSection = document.querySelector(".order-section");
   const orderDishesContainer = document.querySelector(".order-dishes");
-  const orderForm = document.querySelector(".order-form");
   const emptyBlock = document.querySelector(".order-empty");
   const totalEl = document.getElementById("order-total");
 
@@ -152,4 +192,86 @@ function createOrderDishCard(dish, category) {
   });
 
   return div;
+}
+
+function validateField(input) {
+  let valid = true;
+  let message = "";
+
+  if (!input.value.trim()) {
+    valid = false;
+    message = "Это поле обязательно";
+  } 
+  else if (input.id === "email" && !/\S+@\S+\.\S+/.test(input.value)) {
+    valid = false;
+    message = "Введите корректный email";
+  } 
+  else if (
+    input.id === "phone" &&
+    !/^\+7\d{10}$/.test(input.value)
+  ) {
+    valid = false;
+    message = "Введите корректный телефон";
+  }
+
+  if (!valid) {
+    input.classList.add("input-error");
+    showErrorMessage(input, message);
+  } else {
+    input.classList.remove("input-error");
+    const msg = input.parentNode.querySelector(".error-message");
+    if (msg) msg.remove();
+  }
+
+  return valid;
+}
+
+function showErrorMessage(input,message){
+  const parent = input.parentNode;
+  let msg = input.nextElementSibling;
+  if (!msg){
+    msg = document.createElement("div");
+    msg.className = "error-message";
+    parent.appendChild(msg);
+  }
+  msg.textContent = message;
+}
+
+
+function validateFormFields() {
+
+  const fields = [
+    document.getElementById("name"),
+    document.getElementById("email"),
+    document.getElementById("phone"),
+    document.getElementById("address"),
+  ];
+
+  for(const field of fields) {
+    if(!validateField(field)) {
+      field.focus();
+      return false
+    }
+  }
+
+  // Проверка радио delivery_mode
+  const deliveryTypeEl = document.querySelector('input[name="delivery_mode"]:checked');
+  const container = document.getElementById("delivery_type_container");
+
+  if(!deliveryTypeEl) {
+    container.classList.add("input-error");
+
+    if(!container.querySelector(".error-message")) {
+      const msg = document.createElement("div");
+      msg.className = "error-message";
+      msg.textContent = "Выберите тип доставки";
+      container.appendChild(msg);
+    }
+    return false;
+  }
+  container.classList.remove("input-error");
+  const msg = container.querySelector(".error-message");
+  if (msg) msg.remove();
+
+  return true;
 }

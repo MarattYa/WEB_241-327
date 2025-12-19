@@ -23,7 +23,7 @@
   <main>
     <div class="order-empty" style="display:none">
       <p class="empty-text">
-        Вы ничего не выбрали 😢<br>
+        Вы ничего не выбрали :(<br>
         Сначала соберите ланч
       </p>
       <a href="lunch.html" class="back-btn">Собрать ланч</a>
@@ -75,7 +75,7 @@
             
             <div class="comments-section">
               <h4>Комментарии к заказу</h4>
-              <textarea name="comments" placeholder="Дополнительные пожелания..."></textarea>
+              <textarea id="comment" name="comments" placeholder="Дополнительные пожелания..."></textarea>
             </div>
           </div>
 
@@ -103,11 +103,11 @@
             <p class="delivery-note"><em>Доставка осуществляется только по Москве</em></p>
 
             <p class="delivery-label">Время доставки:</p>
-            <div class="radio-row">
-              <input id="asap" name="delivery_mode" type="radio" value="asap" checked required>
+            <div class="radio-row" id="delivery_type_container">
+              <input id="asap" name="delivery_mode" type="radio" value="now" checked >
               <label for="asap">Как можно скорее</label>
 
-              <input id="at_time" name="delivery_mode" type="radio" value="at_time">
+              <input id="at_time" name="delivery_mode" type="radio" value="by_time">
               <label for="at_time">К указанному времени</label>
             </div>
 

@@ -2,7 +2,7 @@
 function renderDishCard(dish, { mode, onClick }) {
   const card = document.createElement("div");
   card.className = "dish";
-  card.dataset.dish = dish.keyword;
+  card.dataset.dish = dish.id;
 
   const buttonText = mode === "remove" ? "Удалить" : "Добавить";
 
@@ -15,7 +15,7 @@ function renderDishCard(dish, { mode, onClick }) {
   `;
 
     card.addEventListener("click", () => {
-        onClick(dish.keyword);
+        onClick(dish);
     });
     
   return card;

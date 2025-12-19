@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (filter) list = list.filter(d => d.kind === filter);
 
     list.forEach(dish => {
-      const mode = window.order[dish.category]?.keyword === dish.keyword ? "remove" : "add";
+      const mode = window.order[dish.category]?.id === dish.id ? "remove" : "add";
 
       const card = renderDishCard(dish, {
         mode,
@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   function handleAddDish(dish, card) {
-    if (window.order[dish.category]?.keyword === dish.keyword){
+    if (window.order[dish.category]?.id === dish.id){
       window.removeDishFromOrder(dish.category);
     } else {
       // Анимация "летящей карточки"
@@ -55,9 +55,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         clone.style.opacity = "0";
       });
       setTimeout(() => clone.remove(), 600);
-      window.addDishToOrder(dish.keyword);
+      window.addDishToOrder(dish.id);
     }
-    
+    renderCategory(dish.category);
     highlightSelected();
     window.updateCartPanel();
   }
@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       .forEach(c => c.classList.remove("selected"));
 
     Object.values(window.order).forEach(dish => {
-      const card = document.querySelector(`.dish[data-dish="${dish.keyword}"]`);
+      const card = document.querySelector(`.dish[data-dish="${dish.id}"]`);
       if (card) card.classList.add("selected");
     });
   }
@@ -103,22 +103,29 @@ Object.keys(sections).forEach(category => {
 
   // Переход на страницу заказа
   const checkoutBtn = document.getElementById("checkout-link");
-  checkoutBtn.addEventListener("click", () => {
-    if (!checkoutBtn.classList.contains("disabled")) {
-      window.location.href = "order.html";
-    }
+  checkoutBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if(checkoutBtn.classList.contains("disabled")) return;
+
+    const ok = window.checkLunch();
+    if(!ok) return;
+
+    window.location.href = "order.html";
+   
   });
 
   // Дополнительно: обработка ссылки в header
   const orderLink = document.querySelector('nav a[href="order.html"]');
   if (orderLink) {
     orderLink.addEventListener("click", (e) => {
-      const orderEntries = Object.entries(window.order || {});
-      if (orderEntries.length === 0) {
-        e.preventDefault(); // Отменяем переход
-        alert("Вы не выбрали ни одного блюда. Сначала соберите ланч!");
+      e.preventDefault();
+      e.stopPropagation();
+      const ok = window.checkLunch();
+      if(!ok) {
+        e.preventDefault();
       }
-      // Если есть блюда — переход разрешён
     });
   }
 
