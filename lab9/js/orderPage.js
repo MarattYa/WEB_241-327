@@ -131,7 +131,8 @@ function renderOrderPage() {
 
   orderDishesContainer.innerHTML = "";
 
-  const orderEntries = Object.entries(window.order);
+  const orderEntries = Object.entries(window.order)
+    .filter(([_,dish]) => dish && dish.id);
   let total = 0;
 
   if (orderEntries.length === 0) {

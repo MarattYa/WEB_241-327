@@ -84,10 +84,22 @@
             <h3>Ваши данные</h3>
             
             <label for="name">Имя</label>
-            <input id="name" name="name" type="text" required placeholder="Ваше имя">
+            <input 
+              id="name" 
+              name="name" 
+              type="text" 
+              required 
+              minlength="2"
+              maxlength="12"
+              placeholder="Ваше имя">
 
             <label for="email">Email</label>
-            <input id="email" name="email" type="email" required placeholder="email@domain.ru">
+            <input 
+              id="email" 
+              name="email" 
+              type="email" 
+              required 
+              placeholder="email@domain.ru">
 
             <div class="checkbox-row">
               <input id="subscribe" name="subscribe" type="checkbox" checked>
@@ -104,7 +116,7 @@
 
             <p class="delivery-label">Время доставки:</p>
             <div class="radio-row" id="delivery_type_container">
-              <input id="asap" name="delivery_mode" type="radio" value="now" checked >
+              <input id="asap" name="delivery_mode" type="radio" value="now">
               <label for="asap">Как можно скорее</label>
 
               <input id="at_time" name="delivery_mode" type="radio" value="by_time">

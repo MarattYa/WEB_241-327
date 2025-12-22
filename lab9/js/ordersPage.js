@@ -125,7 +125,9 @@ function openDetailsModal(order) {
         <p><b>Состав:</b> ${dishesList.join(", ")}</p>
         <p><b>Стоимость:</b> ${total} ₽</p>
 
-        <button onclick="closeModal()">OK</button>
+        <div class="modal-actions">
+        <button class="modal-button-ok " onclick="closeModal()">OK</button>
+        </div>
       </div>
     </div>
   `;

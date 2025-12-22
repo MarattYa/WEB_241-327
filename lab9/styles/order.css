@@ -1,5 +1,5 @@
 /* =========================
-   ORDER PAGE STYLES (точно как lunch.css)
+   ORDER PAGE STYLES
 ========================= */
 
 /* Общие стили страницы */
@@ -155,7 +155,9 @@ h2 {
   box-shadow: 0 5px 20px rgba(0,0,0,0.1);
 }
 
-/* Левый блок - Заказ */
+/* =========================
+   ЛЕВЫЙ БЛОК — ЗАКАЗ
+========================= */
 .order-left {
   padding-right: 30px;
   border-right: 1px solid #eee;
@@ -228,83 +230,86 @@ h2 {
   margin-bottom: 15px;
 }
 
-
-
-/* Правый блок - Данные */
-.order-right input {
-    width: 100%;
-    padding: 12px 15px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-family: inherit;
-    font-size: 1rem;
-}
-
-.order-right input:focus {
-    outline: none;
-    border-color: tomato;
-    box-shadow: 0 0 0 2px rgba(255, 99, 71, 0.1);
-}
-
-/* Кнопки формы */
-.form-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 15px;
-    margin-top: 30px;
-}
-
-.form-actions button {
-    padding: 12px 30px;
-    border-radius: 8px;
-    font-family: inherit;
-    font-size: 1rem;
-    cursor: pointer;
-    border: none;
-    font-weight: 600;
-    transition: 0.3s;
-}
-
-.form-actions button[type="reset"] {
-    background: #f0f0f0;
-}
-
-.form-actions button[type="submit"] {
-    background: tomato;
-    color: white;
-}
+/* =========================
+   ПРАВЫЙ БЛОК — ДАННЫЕ
+========================= */
 
 .order-right {
   padding-left: 30px;
 }
 
+/* Заголовок */
+.order-right h3 {
+  font-size: 1.3rem;
+  color: #2c3e50;
+  margin-bottom: 25px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #eee;
+}
+
+/* Метки */
 .order-right label {
   display: block;
   font-weight: 600;
   color: #333;
-  margin-bottom: 8px;
-  margin-top: 15px;
+  margin: 16px 0 6px;
 }
 
+/* Обязательные поля */
+.order-right label:has(+ input[required])::after {
+  content: " *";
+  color: red;
+}
+
+/* Поля ввода */
 .order-right input[type="text"],
 .order-right input[type="email"],
 .order-right input[type="tel"],
 .order-right input[type="time"] {
   width: 100%;
-  padding: 12px 15px;
-  border: 1px solid #ddd;
+  padding: 12px 14px;
+  font-family: inherit;
+  font-size: 1rem;
   border-radius: 8px;
-  font-size: 0.95rem;
-  margin-bottom: 5px;
+  border: 2px solid #ddd;
+  transition: 0.2s;
 }
 
+/* Hover */
+.order-right input:hover {
+  background-color: #fff7f4;
+}
+
+/* Focus */
 .order-right input:focus {
   outline: none;
-  border-color: #ff6347;
-  box-shadow: 0 0 0 2px rgba(255, 99, 71, 0.1);
+  border-color: tomato;
+  box-shadow: 0 0 0 2px rgba(255, 99, 71, 0.15);
+  background-color: #fff;
 }
 
-/* информация о скидках */
+/* Ошибка */
+.order-right input.input-error {
+  border-color: red;
+  background-color: #fff5f5;
+}
+
+/* Сообщение ошибки */
+.error-message {
+  color: red;
+  font-size: 0.8rem;
+  margin-top: 4px;
+  line-height: 1.2;
+}
+
+.error-message:empty {
+  display: none;
+}
+
+/* =========================
+   CHECKBOX
+========================= */
+
 .checkbox-row {
   display: flex;
   align-items: center;
@@ -312,7 +317,7 @@ h2 {
   margin: 20px 0;
 }
 
-.checkbox-row input[type="checkbox"] {
+.checkbox-row input {
   width: 18px;
   height: 18px;
 }
@@ -320,45 +325,55 @@ h2 {
 .checkbox-row label {
   margin: 0;
   font-weight: normal;
+  cursor: pointer;
 }
+
+/* =========================
+   ДОСТАВКА
+========================= */
 
 .delivery-note {
   color: #666;
   font-size: 0.9rem;
   margin: 15px 0;
   padding-left: 10px;
-  border-left: 3px solid #ff6347;
+  border-left: 3px solid tomato;
 }
 
 .delivery-label {
   font-weight: 600;
-  color: #333;
-  margin: 20px 0 10px 0;
+  margin: 20px 0 10px;
 }
 
-/* Кнопки время доставки */
+/* Радио */
 .radio-row {
   display: flex;
   gap: 30px;
-  margin-bottom: 20px;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.radio-row input {
+  width: 18px;
+  height: 18px;
 }
 
 .radio-row label {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-weight: normal;
-  margin: 0;
   cursor: pointer;
 }
 
-.radio-row input[type="radio"] {
-  width: 18px;
-  height: 18px;
-  margin: 0;
+/* Ошибка радио */
+#delivery_type_container.input-error {
+  border: 2px solid red;
 }
 
-/* Кнопки  сбросить/отправить */
+/* =========================
+   КНОПКИ
+========================= */
+
 .form-actions {
   display: flex;
   justify-content: flex-end;
@@ -367,19 +382,18 @@ h2 {
 }
 
 .form-actions button {
-  padding: 12px 30px;
+  padding: 12px 32px;
   border-radius: 8px;
-  font-family: 'Roboto Mono', monospace;
-  font-weight: 600;
   font-size: 1rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s;
   border: none;
+  transition: 0.3s;
 }
 
 .form-actions button[type="reset"] {
   background: #f0f0f0;
-  color: #666;
+  color: #555;
 }
 
 .form-actions button[type="reset"]:hover {
@@ -387,24 +401,13 @@ h2 {
 }
 
 .form-actions button[type="submit"] {
-  background: #ff6347;
+  background: tomato;
   color: white;
 }
 
 .form-actions button[type="submit"]:hover {
   background: #ff4c2c;
 }
-
-.input-error {
-  border: 2px solid red;
-}
-
-.error-message {
-  color: red;
-  font-size: 0.85rem;
-  margin: 2px;
-}
-
 
 /* Адаптив */
 @media (max-width: 900px) {
