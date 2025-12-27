@@ -71,10 +71,11 @@ h2 {
     color: #2c3e50;
 }
 
-img {
+#about img {
     width: 100%;
-    height: 450px;
-    object-fit: cover;
+    max-height: 400px;   /* ← главное */
+    object-fit: cover;  /* обрезает лишнее, но красиво */
+    border-radius: 8px;
     margin: 20px 0;
 }
 
